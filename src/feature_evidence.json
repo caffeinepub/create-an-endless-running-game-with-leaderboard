@@ -1,0 +1,114 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-playable-endless-running-game-where-the-player-controls-a-runner-that-automatically-moves-forward-can-avoid-obstacles-and-the-game-ends-on-collision",
+      "featureTitle": "Create a playable endless running game where the player controls a runner that automatically moves forward, can avoid obstacles, and the game ends on collision.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/game/RunnerGame.tsx",
+        "frontend/src/features/game/gamePhysics.ts",
+        "frontend/src/features/game/types.ts",
+        "frontend/src/features/game/useRunnerControls.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-scoring-and-difficulty-progression-for-the-running-game",
+      "featureTitle": "Implement scoring and difficulty progression for the running game.",
+      "files": [
+        "frontend/src/features/game/RunnerGame.tsx",
+        "frontend/src/features/game/gamePhysics.ts",
+        "frontend/src/features/game/useGameLoop.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-in-game-hud-and-minimal-navigation-flow-start-screen-in-game-hud-game-over-screen-and-a-leaderboard-screen-section",
+      "featureTitle": "Add an in-game HUD and minimal navigation flow: Start screen, in-game HUD, Game Over screen, and a Leaderboard screen/section.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+        "frontend/src/features/ui/GameOverScreen.tsx",
+        "frontend/src/features/ui/Hud.tsx",
+        "frontend/src/features/ui/StartScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-connect-the-frontend-to-the-backend-using-react-query-submit-score-on-game-over-when-authenticated-fetch-caller-best-score-and-fetch-the-global-leaderboard",
+      "featureTitle": "Connect the frontend to the backend using React Query: submit score on Game Over (when authenticated), fetch caller best score, and fetch the global leaderboard.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/auth/AuthControls.tsx",
+        "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+        "frontend/src/features/leaderboard/queries.ts",
+        "frontend/src/features/ui/GameOverScreen.tsx",
+        "frontend/src/features/ui/Hud.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-single-coherent-visual-theme-for-the-app-colors-typography-ui-styling-and-game-presentation-and-use-it-consistently-across-start-hud-game-over-and-leaderboard-views",
+      "featureTitle": "Apply a single coherent visual theme for the app (colors, typography, UI styling, and game presentation) and use it consistently across Start, HUD, Game Over, and Leaderboard views.",
+      "files": [
+        "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+        "frontend/src/features/ui/GameOverScreen.tsx",
+        "frontend/src/features/ui/StartScreen.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

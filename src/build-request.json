@@ -1,0 +1,145 @@
+{
+  "kind": "build_request",
+  "title": "Create an endless running game with leaderboard",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a playable endless running game where the player controls a runner that automatically moves forward, can avoid obstacles, and the game ends on collision.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A game screen loads and the runner begins moving forward automatically after pressing a Start action",
+        "Player has at least one control to avoid obstacles (e.g., jump and/or lane switch) using keyboard controls on desktop",
+        "Obstacles spawn repeatedly and move toward/relative to the runner such that the player must react",
+        "On collision, gameplay stops and a Game Over state is shown with the final score and a Restart action"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement scoring and difficulty progression for the running game.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Score increases over time and/or based on distance survived",
+        "Game speed and/or obstacle frequency increases gradually to make the game harder the longer the player survives",
+        "Restarting the game resets score, difficulty, and player position/state deterministically"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add an in-game HUD and minimal navigation flow: Start screen, in-game HUD, Game Over screen, and a Leaderboard screen/section.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Start screen includes game title and basic controls instructions in English",
+        "In-game HUD shows current score (and optionally best score) in English",
+        "Game Over screen shows final score and a Restart button",
+        "A Leaderboard view is accessible from Start and/or Game Over states and displays top scores"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Persist per-user best score and a global top leaderboard in the Motoko backend, keyed by the authenticated principal (Internet Identity).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a method to submit a score for the caller and update their best score only if the new score is higher",
+        "Backend exposes a method to fetch the caller’s best score",
+        "Backend exposes a method to fetch a global leaderboard (e.g., top N entries) including score and principal (or a display label derived from it)",
+        "Data persists across page reloads and canister calls"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Connect the frontend to the backend using React Query: submit score on Game Over (when authenticated), fetch caller best score, and fetch the global leaderboard.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When the user is signed in, the app submits the final score to the backend on Game Over and refreshes displayed best score and leaderboard",
+        "When the user is not signed in, the UI clearly indicates sign-in is required to save scores (English text) and does not attempt to submit",
+        "Leaderboard view loads data via React Query with loading and error states in English"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a single coherent visual theme for the app (colors, typography, UI styling, and game presentation) and use it consistently across Start, HUD, Game Over, and Leaderboard views.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Running game create"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses a consistent color palette and typography across all screens",
+        "Buttons/controls share consistent styling and interaction states",
+        "Theme avoids default browser styling and feels intentionally designed (do not use a blue+purple theme unless explicitly requested)"
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo); only add migration.mo if state upgrades are required",
+    "Do not edit files under frontend/src/components/ui (compose them instead)",
+    "Do not edit immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx",
+    "Use English for all user-facing UI text"
+  ],
+  "nonGoals": [
+    "Multiplayer or real-time competitive play",
+    "WebSockets or live chat",
+    "External databases or third-party auth providers other than Internet Identity",
+    "In-app purchases, payments, or ads",
+    "Complex 3D character animation or asset-heavy art pipelines"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

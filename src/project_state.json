@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Create a running game",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-playable-endless-running-game-where-the-player-controls-a-runner-that-automatically-moves-forward-can-avoid-obstacles-and-the-game-ends-on-collision",
+      "title": "Create a playable endless running game where the player controls a runner that automatically moves forward, can avoid obstacles, and the game ends on collision.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-scoring-and-difficulty-progression-for-the-running-game",
+      "title": "Implement scoring and difficulty progression for the running game.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-game-hud-and-minimal-navigation-flow-start-screen-in-game-hud-game-over-screen-and-a-leaderboard-screen-section",
+      "title": "Add an in-game HUD and minimal navigation flow: Start screen, in-game HUD, Game Over screen, and a Leaderboard screen/section.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-connect-the-frontend-to-the-backend-using-react-query-submit-score-on-game-over-when-authenticated-fetch-caller-best-score-and-fetch-the-global-leaderboard",
+      "title": "Connect the frontend to the backend using React Query: submit score on Game Over (when authenticated), fetch caller best score, and fetch the global leaderboard.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-single-coherent-visual-theme-for-the-app-colors-typography-ui-styling-and-game-presentation-and-use-it-consistently-across-start-hud-game-over-and-leaderboard-views",
+      "title": "Apply a single coherent visual theme for the app (colors, typography, UI styling, and game presentation) and use it consistently across Start, HUD, Game Over, and Leaderboard views.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a running game",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Persist per-user best score and a global top leaderboard in the Motoko backend, keyed by the authenticated principal (Internet Identity).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Create an endless running game with leaderboard",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

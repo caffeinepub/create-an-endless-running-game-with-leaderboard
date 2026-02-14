@@ -1,0 +1,184 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Endless Runner (2D) with Leaderboard UI",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement a playable 2D endless runner loop (start → run → collision → game over) with keyboard controls and obstacle spawning.",
+      "acceptanceCriteria": [
+        "A game screen loads and the runner begins moving forward automatically after pressing a Start action",
+        "Player has at least one control to avoid obstacles (e.g., jump and/or lane switch) using keyboard controls on desktop",
+        "Obstacles spawn repeatedly and move toward/relative to the runner such that the player must react",
+        "On collision, gameplay stops and a Game Over state is shown with the final score and a Restart action"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the root app UI that hosts the endless runner experience and state-based screens (Start, Playing, Game Over) and wires navigation to the Leaderboard section. Use shadcn-ui components for layout/controls (e.g., Button/Card) to keep UI consistent. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/game/RunnerGame.tsx",
+          "operation": "create",
+          "description": "Implement the main 2D game view using a canvas or div-based renderer with requestAnimationFrame: auto-forward motion illusion, obstacle spawning/movement, collision detection, and game state transitions (start/play/over). Handle desktop keyboard controls (e.g., Space to jump and/or ArrowLeft/ArrowRight to switch lanes)."
+        },
+        {
+          "path": "frontend/src/features/game/useRunnerControls.ts",
+          "operation": "create",
+          "description": "Add a hook to register/unregister keyboard listeners and translate key presses into game actions (jump/lane switch), ensuring controls are only active during gameplay and are cleaned up on unmount."
+        },
+        {
+          "path": "frontend/src/features/game/gamePhysics.ts",
+          "operation": "create",
+          "description": "Add deterministic helper functions for runner movement (jump arc), obstacle motion, lane positions, and collision checks to keep the game logic testable and consistent across restarts."
+        },
+        {
+          "path": "frontend/src/features/game/types.ts",
+          "operation": "create",
+          "description": "Define shared types for runner state, obstacle state, and game state (Start/Playing/GameOver) used by the game components and hooks."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add scoring and difficulty progression (speed and/or obstacle frequency) with deterministic reset on restart.",
+      "acceptanceCriteria": [
+        "Score increases over time and/or based on distance survived",
+        "Game speed and/or obstacle frequency increases gradually to make the game harder the longer the player survives",
+        "Restarting the game resets score, difficulty, and player position/state deterministically"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/game/RunnerGame.tsx",
+          "operation": "modify",
+          "description": "Integrate score accumulation (e.g., time/distance-based) and difficulty ramping (e.g., gradually increase scroll speed and/or reduce obstacle spawn interval). Ensure restart resets runner position/state, obstacle list, score, and difficulty parameters deterministically."
+        },
+        {
+          "path": "frontend/src/features/game/gamePhysics.ts",
+          "operation": "modify",
+          "description": "Add pure functions/parameters for difficulty progression (e.g., speed curve, spawn interval curve) so progression is consistent and restartable."
+        },
+        {
+          "path": "frontend/src/features/game/useGameLoop.ts",
+          "operation": "create",
+          "description": "Create a hook encapsulating the requestAnimationFrame loop with fixed timestep or delta-time handling, driving score progression and difficulty updates while keeping pause/game-over behavior consistent."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Provide HUD and minimal navigation flow: Start screen, in-game HUD, Game Over screen, and a Leaderboard screen/section accessible from Start and/or Game Over.",
+      "acceptanceCriteria": [
+        "Start screen includes game title and basic controls instructions in English",
+        "In-game HUD shows current score (and optionally best score) in English",
+        "Game Over screen shows final score and a Restart button",
+        "A Leaderboard view is accessible from Start and/or Game Over states and displays top scores"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/ui/StartScreen.tsx",
+          "operation": "create",
+          "description": "Create a Start screen component with English title and brief controls instructions, plus actions to Start and open the Leaderboard section. Use shadcn-ui components (e.g., Card/Button) for consistent UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/ui/Hud.tsx",
+          "operation": "create",
+          "description": "Create an in-game HUD showing current score (and a slot for best score) in English, styled consistently with the app theme. Use shadcn-ui primitives if available (e.g., Card/Badge). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/ui/GameOverScreen.tsx",
+          "operation": "create",
+          "description": "Create a Game Over screen showing final score, Restart action, and entry point to Leaderboard. Use shadcn-ui components (e.g., Button/Card). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+          "operation": "create",
+          "description": "Create a Leaderboard screen/section component that renders top scores (principal label + score) and can be shown from Start and Game Over. Prefer shadcn-ui Table/Tabs/Dialog patterns for presentation where available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire StartScreen, RunnerGame (playing view), Hud, GameOverScreen, and LeaderboardSection into a cohesive flow (no orphan components). Ensure Leaderboard is reachable from Start and/or Game Over states."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Use React Query to fetch best score and leaderboard, and submit score on Game Over only when authenticated; include loading/error states and clear messaging when not signed in.",
+      "acceptanceCriteria": [
+        "When the user is signed in, the app submits the final score to the backend on Game Over and refreshes displayed best score and leaderboard",
+        "When the user is not signed in, the UI clearly indicates sign-in is required to save scores (English text) and does not attempt to submit",
+        "Leaderboard view loads data via React Query with loading and error states in English"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/leaderboard/queries.ts",
+          "operation": "create",
+          "description": "Create React Query hooks that use useActor() to call backend capabilities from frontend/src/backend.d.ts: getBestScore(), getLeaderboard(n), and submitScore(newScore). Include query keys, invalidation helpers, and robust bigint handling."
+        },
+        {
+          "path": "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+          "operation": "modify",
+          "description": "Load leaderboard data via React Query with English loading and error states, and render a stable top-N list/table. Use shadcn-ui (e.g., Table, Skeleton/Alert patterns) if present. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/ui/Hud.tsx",
+          "operation": "modify",
+          "description": "Fetch and display the caller best score (when available) via React Query, with clear English placeholders for loading/error/unauthenticated states. Use shadcn-ui text/badge components if available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/auth/AuthControls.tsx",
+          "operation": "create",
+          "description": "Add a small auth control component that uses useInternetIdentity() to show Sign in / Sign out actions and current auth state. Use shadcn-ui Button for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/ui/GameOverScreen.tsx",
+          "operation": "modify",
+          "description": "On Game Over, if authenticated, submit the final score via a React Query mutation and then refresh best score + leaderboard queries; if not authenticated, show English text that sign-in is required to save scores and do not submit."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire AuthControls into Start and/or Game Over screens and pass auth state down so the UI can conditionally submit scores and display messaging correctly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply a consistent intentional theme (colors, typography, and control styling) across Start, HUD, Game Over, and Leaderboard.",
+      "acceptanceCriteria": [
+        "UI uses a consistent color palette and typography across all screens",
+        "Buttons/controls share consistent styling and interaction states",
+        "Theme avoids default browser styling and feels intentionally designed (do not use a blue+purple theme unless explicitly requested)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global styling and theme tokens (CSS variables/Tailwind base) to establish a cohesive palette and typography (avoid default browser styling; avoid blue+purple as primary theme). Ensure consistent background, text, and focus/hover states across the app."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions (if needed) to support the chosen palette/typography tokens used across Start, HUD, Game Over, and Leaderboard, keeping configuration consistent with existing Tailwind variable-based colors."
+        },
+        {
+          "path": "frontend/src/features/ui/StartScreen.tsx",
+          "operation": "modify",
+          "description": "Apply consistent component styling (spacing, typography hierarchy, button variants) using the global theme and shadcn-ui patterns where available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/ui/GameOverScreen.tsx",
+          "operation": "modify",
+          "description": "Apply the same theme styling and consistent button interactions as Start/HUD/Leaderboard (shared variants, focus rings, hover states). Use shadcn-ui components if available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/leaderboard/LeaderboardSection.tsx",
+          "operation": "modify",
+          "description": "Ensure Leaderboard visuals match the theme (table styling, headings, empty/loading/error states). Use shadcn-ui components if available. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

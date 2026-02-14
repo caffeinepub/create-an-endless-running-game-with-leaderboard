@@ -1,0 +1,16 @@
+{
+  "frontend/src/index.css": "Global styles with a warm sunrise/sunset runner theme using OKLCH colors, custom animations, and game-specific utilities.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom fonts, warm color palette, glow shadows, and game-specific animations.",
+  "frontend/src/App.tsx": "Main app component managing game state flow between Start, Playing, GameOver, and Leaderboard screens with theme provider.",
+  "frontend/src/features/game/types.ts": "TypeScript type definitions for game state including runner, obstacles, game phases, and configuration.",
+  "frontend/src/features/game/gamePhysics.ts": "Pure functions for game physics including runner movement, jumping, lane switching, collision detection, and difficulty progression.",
+  "frontend/src/features/game/useRunnerControls.ts": "Custom hook managing keyboard input for jump and lane switching with proper cleanup.",
+  "frontend/src/features/game/useGameLoop.ts": "Custom hook implementing requestAnimationFrame game loop with delta time handling and proper cleanup, fixed to provide initial value for useRef.",
+  "frontend/src/features/game/RunnerGame.tsx": "Main game component rendering canvas-based endless runner with obstacle spawning, collision detection, and score tracking.",
+  "frontend/src/features/ui/StartScreen.tsx": "Start screen with game instructions, controls guide, and navigation to game or leaderboard with auth controls.",
+  "frontend/src/features/ui/Hud.tsx": "In-game heads-up display showing current score and best score (when authenticated) with loading states.",
+  "frontend/src/features/ui/GameOverScreen.tsx": "Game over screen displaying final score, auto-submitting to backend when authenticated, with restart and navigation options.",
+  "frontend/src/features/leaderboard/queries.ts": "React Query hooks for backend integration including getBestScore, getLeaderboard, and submitScore with proper invalidation.",
+  "frontend/src/features/leaderboard/LeaderboardSection.tsx": "Leaderboard view displaying top 10 scores with rank icons, highlighting current user, and loading/error states.",
+  "frontend/src/features/auth/AuthControls.tsx": "Authentication control component using Internet Identity with sign in/out buttons and principal display."
+}
